@@ -24,9 +24,9 @@
         <tbody>
             {% for registro in eliminaciones %}
             <tr>
-                <td class="titulo-curso">{{ registro.curso_titulo }}</td>
-                <td>{{ registro.motivo }}</td>
-                <td>{{ registro.fecha }}</td>
+                <td class="titulo-curso" data-label="Curso eliminado">{{ registro.curso_titulo }}</td>
+                <td data-label="Motivo">{{ registro.motivo }}</td>
+                <td data-label="Fecha">{{ registro.fecha }}</td>
             </tr>
             {% endfor %}
         </tbody>

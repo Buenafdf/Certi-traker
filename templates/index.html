@@ -51,9 +51,9 @@
         <tbody>
             {% for curso in cursos %}
             <tr>
-                <td class="titulo-curso">{{ curso.titulo }}</td>
-                <td>{{ curso.plataforma or "—" }}</td>
-                <td>
+                <td class="titulo-curso" data-label="Curso">{{ curso.titulo }}</td>
+                <td data-label="Plataforma">{{ curso.plataforma or "—" }}</td>
+                <td data-label="Tipo">
                     {% if curso.tipo == "Gratuito" %}
                         <span class="badge badge-gratuito">Gratuito</span>
                     {% elif curso.tipo == "De pago" %}
@@ -62,7 +62,7 @@
                         <span>{{ curso.tipo or "—" }}</span>
                     {% endif %}
                 </td>
-                <td>
+                <td data-label="Estado">
                     {% if curso.estado == "Completado" %}
                         <span class="badge badge-completado">Completado</span>
                     {% elif curso.estado == "En curso" %}
@@ -71,7 +71,7 @@
                         <span class="badge badge-por-iniciar">Por iniciar</span>
                     {% endif %}
                 </td>
-                <td>
+                <td data-label="Enlaces">
                     {% if curso.link_curso %}
                         <a class="enlace" href="{{ curso.link_curso }}" target="_blank" rel="noopener">Curso</a>
                     {% endif %}
@@ -83,8 +83,8 @@
                         —
                     {% endif %}
                 </td>
-                <td class="celda-mono">{{ curso.fecha }}</td>
-                <td>
+                <td class="celda-mono" data-label="Registro">{{ curso.fecha }}</td>
+                <td data-label="Acciones">
                     <div class="acciones">
                         <a class="btn btn-secundario btn-mini" href="{{ url_for('editar_curso', curso_id=curso.id) }}">Editar</a>
                         <button class="btn btn-peligro btn-mini" type="button"

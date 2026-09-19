@@ -850,6 +850,101 @@ footer .punto-live {
     .particula { width: 3px; height: 3px; }
 }
 
+/* ===================== Móvil: tabla como tarjetas ===================== */
+@media (max-width: 720px) {
+    .contenedor-tabla {
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        overflow: visible;
+    }
+
+    .contenedor-tabla:has(.estado-vacio) {
+        background: linear-gradient(180deg, var(--superficie-clara), var(--superficie));
+        border: 1px solid var(--borde);
+        border-radius: var(--radio);
+        box-shadow: var(--sombra);
+        overflow: hidden;
+    }
+
+    .tabla-cursos,
+    .tabla-cursos tbody,
+    .tabla-cursos tr,
+    .tabla-cursos td {
+        display: block;
+        width: 100%;
+    }
+
+    .tabla-cursos thead {
+        display: none;
+    }
+
+    .tabla-cursos tbody {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .tabla-cursos tr {
+        background: linear-gradient(180deg, var(--superficie-clara), var(--superficie));
+        border: 1px solid var(--borde);
+        border-radius: var(--radio);
+        box-shadow: var(--sombra);
+        padding: 0.35rem 0;
+        overflow: hidden;
+    }
+
+    .tabla-cursos tr:hover {
+        background: linear-gradient(180deg, var(--superficie-clara), var(--superficie));
+    }
+
+    .tabla-cursos td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.6rem 1rem;
+        border-bottom: 1px solid var(--borde-suave);
+    }
+
+    .tabla-cursos td:last-child {
+        border-bottom: none;
+    }
+
+    .tabla-cursos td::before {
+        content: attr(data-label);
+        font-family: var(--mono);
+        font-size: 0.64rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--texto-atenuado);
+        flex-shrink: 0;
+        padding-top: 0.15rem;
+    }
+
+    .tabla-cursos td.titulo-curso {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.15rem;
+        font-size: 1.02rem;
+        border-bottom-width: 2px;
+        border-bottom-color: rgba(34, 211, 238, 0.28);
+    }
+
+    .tabla-cursos td.titulo-curso::before {
+        padding-top: 0;
+    }
+
+    .tabla-cursos td .acciones {
+        justify-content: flex-end;
+    }
+
+    .tabla-cursos td .enlace {
+        white-space: normal;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     body::before,
     .grafico-superior,
