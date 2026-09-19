@@ -16,6 +16,7 @@
     --mono: "JetBrains Mono", "Cascadia Code", Consolas, "Courier New", monospace;
     --radio: 10px;
     --sombra: 0 1px 3px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.25);
+    --max-contenido: 1540px;
 }
 
 * {
@@ -38,6 +39,8 @@ body {
     line-height: 1.6;
     min-height: 100vh;
     background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
 }
 
 body::before {
@@ -231,9 +234,10 @@ body::before {
 }
 
 main {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem 3rem;
+    width: min(calc(100% - 2.5rem), var(--max-contenido));
+    margin-inline: auto;
+    padding: clamp(1.5rem, 3vw, 2.75rem) 0 clamp(2rem, 4vw, 3.5rem);
+    flex: 1;
 }
 
 /* ===================== Barra de consola ===================== */
@@ -247,9 +251,9 @@ main {
 }
 
 .barra-interior {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0.65rem 1.5rem;
+    width: min(calc(100% - 2.5rem), var(--max-contenido));
+    margin-inline: auto;
+    padding: 0.65rem 0;
     display: flex;
     align-items: center;
     gap: 0.8rem;
@@ -312,12 +316,12 @@ main {
     justify-content: space-between;
     gap: 1rem;
     flex-wrap: wrap;
-    margin-bottom: 1.75rem;
+    margin-bottom: clamp(1.25rem, 2.5vw, 2.25rem);
 }
 
 .titulo-console {
     font-family: var(--mono);
-    font-size: 1.8rem;
+    font-size: clamp(1.5rem, 1.4vw + 1rem, 2.5rem);
     font-weight: 700;
     letter-spacing: 0.02em;
     color: var(--texto);
@@ -362,8 +366,8 @@ main {
 
 .resumen {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(175px, 100%), 1fr));
+    gap: clamp(0.85rem, 1.4vw, 1.5rem);
     margin-bottom: 2rem;
 }
 
@@ -373,7 +377,7 @@ main {
     border: 1px solid var(--borde);
     border-radius: var(--radio);
     box-shadow: var(--sombra);
-    padding: 1.1rem 1.25rem 1rem;
+    padding: clamp(1rem, 1.6vw, 1.4rem) clamp(1.1rem, 1.9vw, 1.7rem) clamp(0.9rem, 1.4vw, 1.25rem);
     overflow: hidden;
     transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
@@ -397,7 +401,7 @@ main {
 
 .tarjeta-resumen .numero {
     font-family: var(--mono);
-    font-size: 1.9rem;
+    font-size: clamp(1.7rem, 1.2vw + 1rem, 2.5rem);
     font-weight: 700;
     line-height: 1.1;
 }
@@ -500,7 +504,7 @@ main {
 
 .tabla-cursos th,
 .tabla-cursos td {
-    padding: 0.8rem 1rem;
+    padding: 0.8rem clamp(0.9rem, 1.3vw, 1.7rem);
     text-align: left;
     border-bottom: 1px solid var(--borde-suave);
     vertical-align: middle;
@@ -626,7 +630,7 @@ main {
 
 .estado-vacio {
     text-align: center;
-    padding: 3.2rem 1rem;
+    padding: clamp(2.5rem, 7vh, 5rem) 1rem;
     color: var(--texto-suave);
     font-family: var(--mono);
 }
@@ -673,9 +677,9 @@ main {
     border: 1px solid var(--borde);
     border-radius: var(--radio);
     box-shadow: var(--sombra);
-    padding: 2rem;
-    max-width: 640px;
-    margin: 0 auto;
+    padding: clamp(1.25rem, 3vw, 2.25rem);
+    width: min(100%, 740px);
+    margin-inline: auto;
 }
 
 .formulario h1 {
@@ -814,7 +818,7 @@ footer {
     font-size: 0.78rem;
     font-family: var(--mono);
     letter-spacing: 0.04em;
-    padding: 1.4rem 1rem 3.8rem;
+    padding: 1.4rem 1rem clamp(3rem, 6vh, 4.5rem);
     border-top: 1px solid var(--borde-suave);
     margin-top: 2rem;
 }
