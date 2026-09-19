@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block titulo %}Inicio{% endblock %}
+
+{% block contenido %}
+<div class="encabezado">
+    <div>
+        <h1 class="titulo-console">Mis Cursos<span class="cursor">_</span></h1>
+        <p class="subtitulo">Registro centralizado de cursos · análisis de datos · economía · mercados</p>
+    </div>
+    <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+        <a class="btn btn-secundario" href="{{ url_for('historial') }}">Historial</a>
+        <a class="btn btn-primario" href="{{ url_for('nuevo_curso') }}">+ Nuevo curso</a>
+    </div>
+</div>
+
+{% if cursos %}
+<div class="panel-titulo">Estado de tu portafolio de aprendizaje</div>
+<div class="resumen">
+    <div class="tarjeta-resumen total">
+        <div class="numero">{{ resumen.total }}</div>
+        <div class="etiqueta">Total</div>
+    </div>
+    <div class="tarjeta-resumen por-iniciar">
+        <div class="numero">{{ resumen.por_iniciar }}</div>
+        <div class="etiqueta">Por iniciar</div>
+    </div>
+    <div class="tarjeta-resumen en-curso">
+        <div class="numero">{{ resumen.en_curso }}</div>
+        <div class="etiqueta">En curso</div>
+    </div>
+    <div class="tarjeta-resumen completados">
+        <div class="numero">{{ resumen.completados }}</div>
+        <div class="etiqueta">Completados</div>
+    </div>
+</div>
+
+<div class="contenedor-tabla">
+    <table class="tabla-cursos">
+        <thead>
+            <tr>
+                <th>Curso</th>
+                <th>Plataforma</th>
+                <th>Tipo</th>
+                <th>Estado</th>
+                <th>Enlaces</th>
+                <th>Registro</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for curso in cursos %}
+            <tr>
+                <td class="titulo-curso">{{ curso.titulo }}</td>
+                <td>{{ curso.plataforma or "—" }}</td>
+                <td>
+                    {% if curso.tipo == "Gratuito" %}
+                        <span class="badge badge-gratuito">Gratuito</span>
+                    {% elif curso.tipo == "De pago" %}
+                        <span class="badge badge-pago">De pago</span>
+                    {% else %}
+                        <span>{{ curso.tipo or "—" }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if curso.estado == "Completado" %}
+                        <span class="badge badge-completado">Completado</span>
+                    {% elif curso.estado == "En curso" %}
+                        <span class="badge badge-en-curso">En curso</span>
+                    {% else %}
+                        <span class="badge badge-por-iniciar">Por iniciar</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if curso.link_curso %}
+                        <a class="enlace" href="{{ curso.link_curso }}" target="_blank" rel="noopener">Curso</a>
+                    {% endif %}
+                    {% if curso.link_certificado %}
+                        {% if curso.link_curso %} &middot; {% endif %}
+                        <a class="enlace" href="{{ curso.link_certificado }}" target="_blank" rel="noopener">Certificado</a>
+                    {% endif %}
+                    {% if not curso.link_curso and not curso.link_certificado %}
+                        —
+                    {% endif %}
+                </td>
+                <td class="celda-mono">{{ curso.fecha }}</td>
+                <td>
+                    <div class="acciones">
+                        <a class="btn btn-secundario btn-mini" href="{{ url_for('editar_curso', curso_id=curso.id) }}">Editar</a>
+                        <button class="btn btn-peligro btn-mini" type="button"
+                                data-id="{{ curso.id }}" data-titulo="{{ curso.titulo }}"
+                                onclick="abrirEliminar(this)">Eliminar</button>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="contenedor-tabla">
+    <div class="estado-vacio">
+        <p><strong>BASE DE DATOS VAC&#205;A /</strong></p>
+        <p>Registra tu primer curso para empezar a construir tu portafolio de conocimiento.</p>
+        <p style="color: var(--texto-atenuado); margin-top: 0.75rem;">cmd <span style="color: var(--accent);">+</span> clic en &laquo;+ Nuevo curso&raquo;</p>
+    </div>
+</div>
+{% endif %}
+
+<div class="modal" id="modal-eliminar" hidden>
+    <div class="modal-contenido">
+        <h2>Eliminar curso</h2>
+        <p>Vas a eliminar <strong id="modal-titulo"></strong>.</p>
+        <div class="campo">
+            <label for="modal-motivo">¿Por qué deseas eliminarlo? <span class="requerido">*</span></label>
+            <textarea id="modal-motivo" rows="3"
+                      placeholder="Ej.: Lo completé y ya no lo necesito, lo abandoné, estaba duplicado..."></textarea>
+        </div>
+        <div class="acciones-formulario">
+            <button class="btn btn-peligro" type="button" onclick="confirmarEliminar()">Sí, eliminar</button>
+            <button class="btn btn-secundario" type="button" onclick="cerrarEliminar()">Cancelar</button>
+        </div>
+        <form id="form-eliminar" method="post" action="">
+            <input type="hidden" name="motivo" id="input-motivo">
+        </form>
+    </div>
+</div>
+
+<script>
+    var idAEliminar = null;
+
+    function abrirEliminar(boton) {
+        idAEliminar = boton.dataset.id;
+        document.getElementById("modal-titulo").textContent = boton.dataset.titulo;
+        document.getElementById("modal-motivo").value = "";
+        document.getElementById("modal-eliminar").hidden = false;
+    }
+
+    function cerrarEliminar() {
+        document.getElementById("modal-eliminar").hidden = true;
+    }
+
+    function confirmarEliminar() {
+        var motivo = document.getElementById("modal-motivo").value.trim();
+        if (!motivo) {
+            alert("Por favor indica el motivo de la eliminación.");
+            return;
+        }
+        var form = document.getElementById("form-eliminar");
+        form.action = "/eliminar/" + idAEliminar;
+        document.getElementById("input-motivo").value = motivo;
+        form.submit();
+    }
+
+    document.getElementById("modal-eliminar").addEventListener("click", function (e) {
+        if (e.target === this) {
+            cerrarEliminar();
+        }
+    });
+</script>
+{% endblock %}

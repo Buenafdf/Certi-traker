@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block titulo %}{{ "Editar curso" if curso else "Nuevo curso" }}{% endblock %}
+
+{% block contenido %}
+<div class="formulario">
+    <h1>{{ "Editar curso" if curso else "Registrar nuevo curso" }}</h1>
+
+    <form method="post"
+          action="{{ url_for('editar_curso', curso_id=curso.id) if curso else url_for('nuevo_curso') }}">
+
+        <div class="campo">
+            <label for="titulo">Título del curso <span class="requerido">*</span></label>
+            <input type="text" id="titulo" name="titulo" maxlength="255" required
+                   value="{{ curso.titulo or '' }}" placeholder="Ej.: Fundamentos de Python">
+        </div>
+
+        <div class="campo">
+            <label for="plataforma">Plataforma</label>
+            <input type="text" id="plataforma" name="plataforma" maxlength="100"
+                   value="{{ curso.plataforma or '' }}" placeholder="Ej.: Coursera, Udemy, freeCodeCamp">
+        </div>
+
+        <div class="campo">
+            <label for="tipo">Tipo</label>
+            <select id="tipo" name="tipo">
+                <option value="" {% if not curso.tipo %}selected{% endif %}>Selecciona...</option>
+                {% for tipo in tipos %}
+                    <option value="{{ tipo }}" {% if curso.tipo == tipo %}selected{% endif %}>{{ tipo }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="estado">Estado</label>
+            <select id="estado" name="estado">
+                {% for estado in estados %}
+                    <option value="{{ estado }}" {% if curso.estado == estado %}selected{% endif %}>{{ estado }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="campo">
+            <label for="link_curso">Enlace al curso</label>
+            <input type="url" id="link_curso" name="link_curso"
+                   value="{{ curso.link_curso or '' }}" placeholder="https://...">
+        </div>
+
+        <div class="campo">
+            <label for="link_certificado">Enlace al certificado</label>
+            <input type="url" id="link_certificado" name="link_certificado"
+                   value="{{ curso.link_certificado or '' }}" placeholder="https://... (PDF, Credly, etc.)">
+            <p class="ayuda">Agrégalo cuando hayas completado el curso.</p>
+        </div>
+
+        <div class="acciones-formulario">
+            <button class="btn btn-primario" type="submit">
+                {{ "Guardar cambios" if curso else "Registrar curso" }}
+            </button>
+            <a class="btn btn-secundario" href="{{ url_for('index') }}">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

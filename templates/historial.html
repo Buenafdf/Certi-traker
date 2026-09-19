@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block titulo %}Historial de eliminaciones{% endblock %}
+
+{% block contenido %}
+<div class="encabezado">
+    <div>
+        <h1 class="titulo-console">Historial de eliminaciones<span class="cursor">_</span></h1>
+        <p class="subtitulo">Registro de cursos eliminados · motivo · fecha</p>
+    </div>
+    <a class="btn btn-secundario" href="{{ url_for('index') }}">&larr; Volver</a>
+</div>
+
+{% if eliminaciones %}
+<div class="contenedor-tabla">
+    <table class="tabla-cursos">
+        <thead>
+            <tr>
+                <th>Curso eliminado</th>
+                <th>Motivo</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for registro in eliminaciones %}
+            <tr>
+                <td class="titulo-curso">{{ registro.curso_titulo }}</td>
+                <td>{{ registro.motivo }}</td>
+                <td>{{ registro.fecha }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="contenedor-tabla">
+    <div class="estado-vacio">
+        <p><strong>HISTORIAL VAC&#205;O /</strong></p>
+        <p>Cuando elimines un curso por alg&#250;n motivo, quedar&#225; registrado aqu&#237;.</p>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

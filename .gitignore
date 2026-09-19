@@ -1,0 +1,27 @@
+# Entorno virtual de Python
+venv/
+env/
+.env
+
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.installed.cfg
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.sublime-project
+*.sublime-workspace
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Base de datos local
+*.bak
+*.mdf
+*.ldf

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Gestor de Cursos{% endblock %} | Certi-Tracker</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="fondo-datos" aria-hidden="true">
+        <svg class="grafico-corner grafico-superior" viewBox="0 0 400 260" preserveAspectRatio="none">
+            <circle cx="200" cy="130" r="170" fill="rgba(34,211,238,0.03)"/>
+            <g class="vela-grupo" opacity="0.85">
+                <line x1="40" y1="50" x2="40" y2="180" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+                <rect x="32" y="90" width="16" height="50" rx="3" fill="#10b981" opacity="0.75"/>
+                <line x1="95" y1="30" x2="95" y2="190" stroke="#fb7185" stroke-width="3" stroke-linecap="round"/>
+                <rect x="87" y="100" width="16" height="60" rx="3" fill="#fb7185" opacity="0.7"/>
+                <line x1="150" y1="20" x2="150" y2="170" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+                <rect x="142" y="70" width="16" height="60" rx="3" fill="#10b981" opacity="0.75"/>
+                <line x1="205" y1="40" x2="205" y2="200" stroke="#fb7185" stroke-width="3" stroke-linecap="round"/>
+                <rect x="197" y="110" width="16" height="55" rx="3" fill="#fb7185" opacity="0.7"/>
+                <line x1="260" y1="25" x2="260" y2="160" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+                <rect x="252" y="60" width="16" height="65" rx="3" fill="#10b981" opacity="0.75"/>
+                <line x1="320" y1="15" x2="320" y2="150" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+                <rect x="312" y="45" width="16" height="70" rx="3" fill="#10b981" opacity="0.8"/>
+                <line x1="370" y1="60" x2="370" y2="190" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+                <rect x="362" y="95" width="16" height="50" rx="3" fill="#f59e0b" opacity="0.8"/>
+            </g>
+            <path class="linea-flujo" d="M38 190 L95 150 L150 130 L205 160 L260 105 L320 75 L372 95"
+                  fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-dasharray="6 6" opacity="0.7" stroke-linecap="round"/>
+            <circle cx="372" cy="95" r="5" fill="#22d3ee" opacity="0.9"/>
+            <circle class="halo" cx="372" cy="95" r="12" fill="none" stroke="#22d3ee" stroke-width="1.5" opacity="0.5"/>
+        </svg>
+        <svg class="grafico-corner grafico-inferior" viewBox="0 0 400 260" preserveAspectRatio="none">
+            <circle cx="200" cy="130" r="170" fill="rgba(129,140,248,0.04)"/>
+            <g class="vela-grupo vela-grupo-dos" opacity="0.75">
+                <line x1="50" y1="180" x2="50" y2="60" stroke="#fb7185" stroke-width="3" stroke-linecap="round"/>
+                <rect x="42" y="90" width="16" height="55" rx="3" fill="#fb7185" opacity="0.65"/>
+                <line x1="110" y1="200" x2="110" y2="80" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+                <rect x="102" y="120" width="16" height="50" rx="3" fill="#10b981" opacity="0.7"/>
+                <line x1="165" y1="160" x2="165" y2="40" stroke="#fb7185" stroke-width="3" stroke-linecap="round"/>
+                <rect x="157" y="85" width="16" height="55" rx="3" fill="#fb7185" opacity="0.65"/>
+                <line x1="225" y1="190" x2="225" y2="70" stroke="#10b981" stroke-width="3" stroke-linecap="round"/>
+                <rect x="217" y="110" width="16" height="50" rx="3" fill="#10b981" opacity="0.7"/>
+                <line x1="285" y1="150" x2="285" y2="30" stroke="#fb7185" stroke-width="3" stroke-linecap="round"/>
+                <rect x="277" y="70" width="16" height="60" rx="3" fill="#fb7185" opacity="0.65"/>
+                <line x1="345" y1="170" x2="345" y2="50" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+                <rect x="337" y="95" width="16" height="50" rx="3" fill="#f59e0b" opacity="0.75"/>
+            </g>
+            <path class="linea-flujo linea-flujo-dos" d="M52 100 L110 140 L165 95 L225 125 L285 85 L345 105"
+                  fill="none" stroke="#818cf8" stroke-width="2.5" stroke-dasharray="6 6" opacity="0.6" stroke-linecap="round"/>
+        </svg>
+        <div class="cinta-tickers">
+            <div class="cinta-track">
+                <span class="cinta-bloque">SPX 5.694,21 ▲ 0,62% &middot; NDX 19.902,11 ▲ 0,84% &middot; DXY 104,08 ▲ 0,12% &middot; BTC/USD 63.412 ▲ 1,78% &middot; ETH/USD 3.278 ▼ 0,45% &middot; WTI 78,55 ▼ 0,31% &middot; GOLD 2.412,60 ▲ 0,28% &middot; TESLA 248,30 ▼ 1,02% &middot; NVIDIA 124,05 ▲ 2,31% &middot; EUR/USD 1,0842 ▼ 0,08%</span>
+                <span class="cinta-bloque">SPX 5.694,21 ▲ 0,62% &middot; NDX 19.902,11 ▲ 0,84% &middot; DXY 104,08 ▲ 0,12% &middot; BTC/USD 63.412 ▲ 1,78% &middot; ETH/USD 3.278 ▼ 0,45% &middot; WTI 78,55 ▼ 0,31% &middot; GOLD 2.412,60 ▲ 0,28% &middot; TESLA 248,30 ▼ 1,02% &middot; NVIDIA 124,05 ▲ 2,31% &middot; EUR/USD 1,0842 ▼ 0,08%</span>
+            </div>
+        </div>
+        <span class="particula p1"></span>
+        <span class="particula p2"></span>
+        <span class="particula p3"></span>
+        <span class="particula p4"></span>
+        <span class="particula p5"></span>
+        <span class="particula p6"></span>
+        <span class="particula p7"></span>
+        <span class="particula p8"></span>
+    </div>
+
+    <div class="barra-consola">
+        <div class="barra-interior">
+            <img class="logo" src="{{ url_for('static', filename='favicon.svg') }}" alt="Certi-Tracker logo">
+            <span class="consola-titulo">CERTI-TRACKER <span class="consola-sep">//</span> DATA CONSOLE</span>
+            <span class="consola-status">SQL SERVER · ALVAROSV14 · TAILNET OK</span>
+        </div>
+    </div>
+
+    <main>
+        {% with mensajes = get_flashed_messages(with_categories=true) %}
+            {% if mensajes %}
+                <div class="mensajes">
+                    {% for categoria, mensaje in mensajes %}
+                        <div class="mensaje {{ categoria }}">{{ mensaje }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block contenido %}{% endblock %}
+    </main>
+    <footer>
+        <p><span class="punto-live"></span>CERTI-TRACKER v1.0 · almacenamiento local SQL Server</p>
+        <p>análisis de datos · economía · mercados</p>
+    </footer>
+</body>
+</html>
