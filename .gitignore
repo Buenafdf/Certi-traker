@@ -25,3 +25,8 @@ desktop.ini
 *.bak
 *.mdf
 *.ldf
+
+# Logs del servidor Flask
+server.log
+server.err.log
+*.log
