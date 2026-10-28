@@ -21,12 +21,18 @@ __pycache__/
 Thumbs.db
 desktop.ini
 
-# Base de datos local
-*.bak
-*.mdf
-*.ldf
+# Base de datos SQLite
+*.db
+*.db-journal
+*.sqlite3
+backups/
 
 # Logs del servidor Flask
 server.log
 server.err.log
 *.log
+
+# Archivos legados SQL Server
+*.bak
+*.mdf
+*.ldf

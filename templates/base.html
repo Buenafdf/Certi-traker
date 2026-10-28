@@ -74,7 +74,13 @@
         <div class="barra-interior">
             <img class="logo" src="{{ url_for('static', filename='favicon.svg') }}" alt="Certi-Tracker logo">
             <span class="consola-titulo">CERTI-TRACKER <span class="consola-sep">//</span> DATA CONSOLE</span>
-            <span class="consola-status">SQL SERVER · ALVAROSV14 · TAILNET OK</span>
+            <span class="consola-status">SQLITE · ONLINE</span>
+            {% if session.get('autenticado') %}
+            <form method="post" action="{{ url_for('logout') }}" style="margin-left:0.5rem">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                <button type="submit" class="btn btn-secundario btn-mini" style="letter-spacing:0.06em">Salir</button>
+            </form>
+            {% endif %}
         </div>
     </div>
 
@@ -92,7 +98,7 @@
         {% block contenido %}{% endblock %}
     </main>
     <footer>
-        <p><span class="punto-live"></span>CERTI-TRACKER v1.0 · almacenamiento local SQL Server</p>
+        <p><span class="punto-live"></span>CERTI-TRACKER v1.0 · SQLite · Online</p>
         <p>análisis de datos · economía · mercados</p>
     </footer>
 </body>

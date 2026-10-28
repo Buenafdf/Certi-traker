@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block titulo %}Acceso{% endblock %}
+
+{% block contenido %}
+<div class="formulario" style="max-width: 420px;">
+    <h1>Acceso</h1>
+
+    {% if error %}
+    <div class="mensaje error" style="margin-bottom: 1.25rem;">{{ error }}</div>
+    {% endif %}
+
+    <form method="post" action="{{ url_for('login') }}">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+        <input type="hidden" name="next" value="{{ next }}">
+
+        <div class="campo">
+            <label for="contrasena">Contraseña <span class="requerido">*</span></label>
+            <input type="password" id="contrasena" name="contrasena"
+                   autocomplete="current-password" autofocus required
+                   placeholder="••••••••">
+        </div>
+
+        <div class="acciones-formulario">
+            <button class="btn btn-primario" type="submit">Entrar</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+

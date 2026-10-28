@@ -9,6 +9,7 @@
         <p class="subtitulo">Registro centralizado de cursos · análisis de datos · economía · mercados</p>
     </div>
     <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+        <a class="btn btn-secundario" href="{{ url_for('exportar_csv') }}">Exportar CSV</a>
         <a class="btn btn-secundario" href="{{ url_for('historial') }}">Historial</a>
         <a class="btn btn-primario" href="{{ url_for('nuevo_curso') }}">+ Nuevo curso</a>
     </div>
@@ -73,11 +74,11 @@
                 </td>
                 <td data-label="Enlaces">
                     {% if curso.link_curso %}
-                        <a class="enlace" href="{{ curso.link_curso }}" target="_blank" rel="noopener">Curso</a>
+                        <a class="enlace" href="{{ curso.link_curso }}" target="_blank" rel="noopener noreferrer">Curso</a>
                     {% endif %}
                     {% if curso.link_certificado %}
                         {% if curso.link_curso %} &middot; {% endif %}
-                        <a class="enlace" href="{{ curso.link_certificado }}" target="_blank" rel="noopener">Certificado</a>
+                        <a class="enlace" href="{{ curso.link_certificado }}" target="_blank" rel="noopener noreferrer">Certificado</a>
                     {% endif %}
                     {% if not curso.link_curso and not curso.link_certificado %}
                         —
@@ -88,7 +89,9 @@
                     <div class="acciones">
                         <a class="btn btn-secundario btn-mini" href="{{ url_for('editar_curso', curso_id=curso.id) }}">Editar</a>
                         <button class="btn btn-peligro btn-mini" type="button"
-                                data-id="{{ curso.id }}" data-titulo="{{ curso.titulo }}"
+                                data-id="{{ curso.id }}"
+                                data-titulo="{{ curso.titulo | e }}"
+                                data-csrf="{{ csrf_token }}"
                                 onclick="abrirEliminar(this)">Eliminar</button>
                     </div>
                 </td>
@@ -122,40 +125,10 @@
         </div>
         <form id="form-eliminar" method="post" action="">
             <input type="hidden" name="motivo" id="input-motivo">
+            <input type="hidden" name="_csrf_token" id="input-csrf">
         </form>
     </div>
 </div>
 
-<script>
-    var idAEliminar = null;
-
-    function abrirEliminar(boton) {
-        idAEliminar = boton.dataset.id;
-        document.getElementById("modal-titulo").textContent = boton.dataset.titulo;
-        document.getElementById("modal-motivo").value = "";
-        document.getElementById("modal-eliminar").hidden = false;
-    }
-
-    function cerrarEliminar() {
-        document.getElementById("modal-eliminar").hidden = true;
-    }
-
-    function confirmarEliminar() {
-        var motivo = document.getElementById("modal-motivo").value.trim();
-        if (!motivo) {
-            alert("Por favor indica el motivo de la eliminación.");
-            return;
-        }
-        var form = document.getElementById("form-eliminar");
-        form.action = "/eliminar/" + idAEliminar;
-        document.getElementById("input-motivo").value = motivo;
-        form.submit();
-    }
-
-    document.getElementById("modal-eliminar").addEventListener("click", function (e) {
-        if (e.target === this) {
-            cerrarEliminar();
-        }
-    });
-</script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
 {% endblock %}
